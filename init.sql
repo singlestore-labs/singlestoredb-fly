@@ -1,0 +1,1 @@
+SET GLOBAL default_partitions_per_leaf = 1;
