@@ -1,4 +1,3 @@
-app = "singlestoredb-fly"
 kill_signal = "SIGINT"
 kill_timeout = 30
 
@@ -37,10 +36,5 @@ kill_timeout = 30
     tls_skip_verify = false
 
   [[services.ports]]
-    force_https = true
-    handlers = ["http"]
-    port = 9000
-
-  [[services.ports]]
     handlers = ["tls", "http"]
-    port = 9443
+    port = 9000
