@@ -33,8 +33,17 @@ flyctl deploy
 # check the logs
 flyctl logs
 
-# check the app status
+# check SingleStoreDB status
 flyctl status
+
+# stop SingleStoreDB
+flyctl scale count 0
+
+# start SingleStoreDB
+flyctl scale count 1
+
+# destroy the app
+flyctl destroy
 ```
 
 ## Connect to SingleStoreDB
@@ -65,7 +74,33 @@ The [Data API][data-api] can also be accessed over HTTPS on port 9000 using your
 
 > **Note**
 > For more information on how to use the Data API please [visit the documentation.][data-api]
-> 
+
+## Setting up persistent storage
+
+By default, this [Fly.io] app does not use persistent storage. If you want to persist data you can use Fly.io [volumes][fly-volumes].
+
+First, create a volume (feel free to change the name or size):
+
+```bash
+flyctl volume create singlestoredb_data --size 30
+```
+
+Next, add a `[mounts]` section to the end of `./fly.toml`:
+
+```bash
+[mounts]
+source="singlestoredb_data"
+destination="/data"
+```
+
+Finally, deploy SingleStoreDB to start using the volume:
+
+```bash
+flyctl deploy
+```
+
+Now that you have persistent storage configured, data will be persisted through stop, start, and restart operations.
+
 ## Where can I learn how to use SingleStoreDB?
 
 Now that you have SingleStore running, please check out the following sections of our official documentation for guides on what to do next.
@@ -85,3 +120,4 @@ Now that you have SingleStore running, please check out the following sections o
 [install flyctl]: https://fly.io/docs/hands-on/install-flyctl/
 [fly signup]: https://fly.io/docs/hands-on/sign-up/
 [data-api]: https://docs.singlestore.com/managed-service/en/reference/data-api.html
+[fly-volumes]: https://fly.io/docs/reference/volumes/
