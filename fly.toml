@@ -1,6 +1,16 @@
 kill_signal = "SIGINT"
 kill_timeout = 30
 
+[build]
+  image = "ghcr.io/singlestore-labs/singlestoredb-dev"
+
+[env]
+  SINGLESTORE_SET_GLOBAL_DEFAULT_PARTITIONS_PER_LEAF = 1
+
+[mounts]
+  destination = "/data"
+  source = "singlestoredb_data"
+
 [[services]]
   internal_port = 3306
   protocol = "tcp"

@@ -1,8 +1,12 @@
-# SingleStoreDB on Fly.io
+# SingleStoreDB on Fly.io <!-- omit in toc -->
 
 This project contains everything you need to run [SingleStoreDB] on [Fly.io] for development. This deployment is **not supported for production workloads or benchmarks** so please keep that in mind when using it. Internally, this project uses the [singlestoredb-dev-image], please see the documentation for that project if you want to customize the deployment.
 
 If you have any questions or issues, please file an issue on the [GitHub repo][gh-issues] or our [forums].
+
+- [Quick Start](#quick-start)
+- [Connect to SingleStoreDB](#connect-to-singlestoredb)
+- [Where can I learn how to use SingleStoreDB?](#where-can-i-learn-how-to-use-singlestoredb)
 
 ## Quick Start
 
@@ -17,7 +21,9 @@ git clone https://github.com/singlestore-labs/singlestoredb-fly
 cd singlestoredb-fly
 
 # initialize the application on your Fly.io account
-flyctl launch --copy-config --no-deploy
+# with the singlestoredb-dev image
+flyctl launch --copy-config --no-deploy \
+  --image ghcr.io/singlestore-labs/singlestoredb-dev
 
 # decide what size app to launch
 # see sizes here: https://fly.io/docs/about/pricing/#virtual-machines
@@ -26,6 +32,9 @@ flyctl scale vm dedicated-cpu-1x
 
 # set your SingleStoreDB license key and root password like so:
 flyctl secrets set SINGLESTORE_LICENSE="YOUR LICENSE KEY" ROOT_PASSWORD="SINGLESTORE PASSWORD"
+
+# create volume to store SingleStoreDB data
+flyctl volume create singlestoredb_data --size 30
 
 # deploy the fly application
 flyctl deploy
@@ -74,32 +83,6 @@ The [Data API][data-api] can also be accessed over HTTPS on port 9000 using your
 
 > **Note**
 > For more information on how to use the Data API please [visit the documentation.][data-api]
-
-## Setting up persistent storage
-
-By default, this [Fly.io] app does not use persistent storage. If you want to persist data you can use Fly.io [volumes][fly-volumes].
-
-First, create a volume (feel free to change the name or size):
-
-```bash
-flyctl volume create singlestoredb_data --size 30
-```
-
-Next, add a `[mounts]` section to the end of `./fly.toml`:
-
-```bash
-[mounts]
-source="singlestoredb_data"
-destination="/data"
-```
-
-Finally, deploy SingleStoreDB to start using the volume:
-
-```bash
-flyctl deploy
-```
-
-Now that you have persistent storage configured, data will be persisted through stop, start, and restart operations.
 
 ## Where can I learn how to use SingleStoreDB?
 
