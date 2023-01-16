@@ -36,6 +36,9 @@ flyctl secrets set SINGLESTORE_LICENSE="YOUR LICENSE KEY" ROOT_PASSWORD="SINGLES
 # create volume to store SingleStoreDB data
 flyctl volume create singlestoredb_data --size 30
 
+# allocate an ip for the application
+fly ips allocate-v4
+
 # deploy the fly application
 flyctl deploy
 
