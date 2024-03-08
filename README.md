@@ -1,5 +1,7 @@
 # SingleStoreDB on Fly.io <!-- omit in toc -->
 
+**Attention**: The code in this repository is intended for experimental use only and is not fully tested, documented, or supported by SingleStore. Visit the [SingleStore Forums](https://www.singlestore.com/forum/) to ask questions about this repository.
+
 This project contains everything you need to run [SingleStoreDB] on [Fly.io] for development. This deployment is **not supported for production workloads or benchmarks** so please keep that in mind when using it. Internally, this project uses the [singlestoredb-dev-image], please see the documentation for that project if you want to customize the deployment.
 
 If you have any questions or issues, please file an issue on the [GitHub repo][gh-issues] or our [forums].
